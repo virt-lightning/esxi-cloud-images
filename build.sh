@@ -54,14 +54,14 @@ vim-cmd hostsvc/start_esx_shell
 esxcli system settings advanced set -o /UserVars/SuppressShellWarning -i 1
 
 cat << 'EOF' > /etc/rc.local.d/local.sh
-python /esxi-cloud-init.py
+python /etc/esxi-cloud-init.py
 exit 0
 EOF
 chmod +x /etc/rc.local.d/local.sh
 
 # This is a base64 copy of
 # https://github.com/goneri/esxi-cloud-init/blob/master/esxi-cloud-init.py
-python -m base64 -d -<< 'EOF' > /esxi-cloud-init.py
+python -m base64 -d -<< 'EOF' > /etc/esxi-cloud-init.py
 IyEvYmluL3B5dGhvbgoKaW1wb3J0IGNyeXB0CmltcG9ydCByZQppbXBvcnQgc3VicHJvY2Vzcwpp
 bXBvcnQganNvbgoKZGVmIGZpbmRfY2Ryb21fZGV2KCk6CiAgICBtcGF0aF9iID0gc3VicHJvY2Vz
 cy5jaGVja19vdXRwdXQoWydlc3hjZmctbXBhdGgnLCAnLWInXSkKICAgIGZvciBsaW5lIGluIG1w

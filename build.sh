@@ -89,6 +89,6 @@ virt-install --connect qemu:///system \
 	--accelerate --network=network:default,model=e1000 \
 	--hvm --graphics vnc,listen=0.0.0.0
 
-
+sudo chmod 644 /var/lib/libvirt/images/esxi-${VERSION}.qcow2
 qemu-img convert -f qcow2 -O qcow2 -c /var/lib/libvirt/images/esxi-${VERSION}.qcow2 esxi-${VERSION}.qcow2
 sudo virsh undefine --remove-all-storage esxi-${VERSION}

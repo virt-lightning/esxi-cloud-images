@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -eux
 if [ -z $1 ]; then
     echo "Usage: $0 ESXi.iso"
     exit 1

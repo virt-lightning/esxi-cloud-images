@@ -33,26 +33,18 @@ echo "
 
 vmaccepteula
 # root/root
-rootpw --iscrypted \$6\$NMbwKGV6gtYGDdrC\$6rDKgLzLpmxuNd9YZcC5ErOjxMWj/PDJknAJYgMGMvmjC7MI0mh6FErmC/.XzKCB0au.uH.U7tz2eTxerqXEG/
+# rootpw --iscrypted \$6\$NMbwKGV6gtYGDdrC\$6rDKgLzLpmxuNd9YZcC5ErOjxMWj/PDJknAJYgMGMvmjC7MI0mh6FErmC/.XzKCB0au.uH.U7tz2eTxerqXEG/
+rootpw $(uuidgen)
 install --firstdisk --overwritevmfs
-#network --bootproto=dhcp
+network --bootproto=dhcp
 
 %post --interpreter=busybox
-# Flush the network configuration
-esxcli network ip dns server remove --all
-echo '' > /etc/resolv.conf
-esxcli network ip interface ipv4 set -i vmk0 -t none
-chkconfig usbarbitrator off
 
 halt
 
 %firstboot --interpreter=busybox
-vim-cmd hostsvc/enable_ssh
-vim-cmd hostsvc/start_ssh
-vim-cmd hostsvc/enable_esx_shell
-vim-cmd hostsvc/start_esx_shell
-esxcli system settings advanced set -o /UserVars/SuppressShellWarning -i 1
 
+/sbin/firmwareConfig.sh --reset-only
 cat << 'EOF' > /etc/rc.local.d/local.sh
 # This is a base64 copy of
 # https://github.com/goneri/esxi-cloud-init/blob/master/esxi-cloud-init.py
@@ -63,13 +55,6 @@ exit 0
 EOF
 chmod +x /etc/rc.local.d/local.sh
 
-
-# Reset the UUID
-sed -i 's#/system/uuid.*##' /etc/vmware/esx.conf
-# Reset the vswitch MAC address
-esxcli system settings advanced set -o /Net/FollowHardwareMac -i 1
-sed -i 's,.*child.0000./mac.*,,' /etc/vmware/esx.conf
-/sbin/backup.sh 0
 halt
 
 EOL" > /tmp/ks_cust.cfg

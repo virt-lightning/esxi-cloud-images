@@ -65,15 +65,19 @@ sudo sed -i 's,TIMEOUT 80,TIMEOUT 1,' ${TARGET_ISO}/isolinux.cfg
 
 sudo genisoimage -relaxed-filenames -J -R -o ${TMPDIR}/new.iso -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -eltorito-alt-boot -e efiboot.img -no-emul-boot ${TARGET_ISO}
 
+sudo mv ${TARGET_ISO}.iso /var/lib/libvirt/images/
+sudo chmod 644 /var/lib/libvirt/images/new.iso
+
 echo "Deployment ongoing, you will just have to press [ENTER] at the end."
 virt-install --connect qemu:///system \
-	-n esxi-${VERSION} -r 4096 \
+	-n esxi-${VERSION}_tmp -r 4096 \
 	--vcpus=sockets=1,cores=2,threads=2 \
 	--cpu host --disk path=/var/lib/libvirt/images/esxi-${VERSION}.qcow2,size=10,sparse=yes \
-	-c ${TMPDIR}/new.iso --os-type generic \
+	-c /var/lib/libvirt/images/new.iso --os-type generic \
 	--accelerate --network=network:default,model=e1000 \
 	--hvm --graphics vnc,listen=0.0.0.0
 
 sudo chmod 644 /var/lib/libvirt/images/esxi-${VERSION}.qcow2
-qemu-img convert -f qcow2 -O qcow2 -c /var/lib/libvirt/images/esxi-${VERSION}.qcow2 esxi-${VERSION}.qcow2
+qemu-img convert -f qcow2 -O qcow2 -c /var/lib/libvirt/images/esxi-${VERSION}_tmp.qcow2 /var/lib/virt-lightning/pool/upstream/esxi-${VERSION}.qcow2
 sudo virsh undefine --remove-all-storage esxi-${VERSION}
+sudo rm /var/lib/libvirt/images/new.iso

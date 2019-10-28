@@ -1,0 +1,4 @@
+username: root
+python_interpreter: /bin/python
+memory: 4096
+default_nic_model: e1000

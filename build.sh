@@ -79,6 +79,7 @@ virt-install --connect qemu:///system \
 
 sleep 10
 sudo qemu-img convert -f qcow2 -O qcow2 -c /var/lib/libvirt/images/esxi-${VERSION}_tmp.qcow2 /var/lib/virt-lightning/pool/upstream/esxi-${VERSION}.qcow2
+sudo cp default_config.yaml /var/lib/virt-lightning/pool/upstream/esxi-${VERSION}.yaml
 sudo chmod 644 /var/lib/virt-lightning/pool/upstream/esxi-${VERSION}.qcow2
 sudo virsh undefine --remove-all-storage esxi-${VERSION}_tmp
 sudo rm /var/lib/libvirt/images/new.iso

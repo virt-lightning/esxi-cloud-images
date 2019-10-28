@@ -12,7 +12,7 @@ fi
 set -eux
 ESXI_ISO=$1
 # We use the label of the ISO image
-VERSION=$(file -b ${ESXI_ISO}| cut -d"'" -f2| cut -d"-" -f2)
+VERSION=$(file -b ${ESXI_ISO}| cut -d"'" -f2|sed 's,ESXI-\(.*\),\1,')
 BASE_DIR=$(pwd)
 TMPDIR=${HOME}/tmp/${VERSION}
 ESXI_MOUNT_POINT=${TMPDIR}/mount

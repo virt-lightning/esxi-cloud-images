@@ -45,6 +45,7 @@ halt
 %firstboot --interpreter=busybox
 
 /sbin/firmwareConfig.sh --reset-only
+esxcfg-advcfg -s 1 /Net/FollowHardwareMac
 cat << 'EOF' > /etc/rc.local.d/local.sh
 # This is a base64 copy of
 # https://github.com/goneri/esxi-cloud-init/blob/master/esxi-cloud-init.py

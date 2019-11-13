@@ -89,4 +89,4 @@ echo "You image is ready! Do use it:
 
     OpenStack:
         source ~/openrc.sh
-        openstack image create --disk-format qcow2 --container-format bare --file esxi-${VERSION}.qcow2 --property hw_disk_bus=ide --property hw_cdrom_bus=ide --property hw_vif_model=e1000 --property hw_boot_menu=true --min-disk 1 --min-ram 4096 esxi-${VERSION}"
+        openstack image create --disk-format qcow2 --container-format bare --file esxi-${VERSION}.qcow2 --property hw_disk_bus=ide --property hw_cdrom_bus=ide --property hw_vif_model=e1000 --property hw_boot_menu=true --property hw_qemu_guest_agent=no --min-disk 1 --min-ram 4096 esxi-${VERSION}"

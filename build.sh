@@ -45,6 +45,7 @@ halt
 %firstboot --interpreter=busybox
 
 /sbin/firmwareConfig.sh --reset-only
+rm /var/lib/dhcp/dhclient-vmk0.leases
 esxcfg-advcfg -s 1 /Net/FollowHardwareMac
 cat << 'EOF' > /etc/rc.local.d/local.sh
 # This is a base64 copy of

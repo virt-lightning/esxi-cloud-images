@@ -52,12 +52,12 @@ echo '/adv/Net/FollowHardwareMac = \"1\"' > /etc/vmware/esx.conf
 cat << 'EOF' > /etc/rc.local.d/local.sh
 # This is a base64 copy of
 # https://github.com/goneri/esxi-cloud-init/blob/master/esxi-cloud-init.py
-echo '$(curl -L -s https://raw.githubusercontent.com/goneri/esxi-cloud-init/master/esxi-cloud-init.py|base64 -)' | python -m base64 -d - > /etc/esxi-cloud-init.py
+echo '$(curl -L -s https://raw.githubusercontent.com/goneri/esxi-cloud-init/devel/esxi-cloud-init.py|base64 -)' | python -m base64 -d - > /etc/esxi-cloud-init.py
 
 # Create the Zuul user for the Ansible-CI
 /usr/lib/vmware/busybox/bin/busybox adduser -s /bin/sh -G root -H -D zuul
 mkdir /etc/ssh/keys-zuul
-echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCyiXfE1zHKdj6odbysr917Cn88ov0VQaPJtLKJyMNuRYAeMOFQHd50X8JO4dfZbmSo3YdJlVfz9FLRxE64mqj9bkN8hPFbkTG2F1AWXGPON5cmm4uiLPfQkWhX/LnClrhzZpNtMJYs5AEFeDs0POijcRugZsQA+wvLi0lSlhOfkqtjAJKpPUwy1wrJFDdvqdQBjpNQh/LB8c15XfQV2JT/3NX26dQe8zvHhL6NvfhBnAikodYkBr7UjSl36CBk0cPebZMZEBBiHdo76xORVkpmqDvkhFByXXeAsvRa2YWS4wxpiNJFswlRhjubGau7LrT113WMcPvgYXHYHf2IYJWD goneri@redhat.com' > /etc/ssh/keys-root/authorized_keys
+sed -i 's,zuul:.*,zuul:\$6\$GUkqMukAyqY3Kj64\$L.Md7sh0Vjuyg553QPxrqlLH/O1j8XL5NxOJ1Fq7ufTpcd3pwhOy3R93yOAhsR8f4MN1Ne70c6qtk5KjiYxQ4/:18226:0:99999:7:::,' /etc/shadow
 echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDI3XA0A84nUpCr9mfkrDjBdoNFtYMXqXMm2+WsGrOJUA2ESodUDDfTKmsA/xEygdCnj8JfSC3SYhc0uKHVe0RdG20mzntUqD50kB0STFeOHh3ee7FXmMxcLqLlyY9pJkn1V5WOi/D1Lbz8MwRUVBfqufryavwHla/9CPuAtPcut8mTUB0+Rapnv8W3n4dA6PqHNW1tylJUXj6P4trJPnFrdfMaIxc21tfd/QrMM4h90phW3zNILE0qF9UHpQxP0zew/LcD9rc+IhnbgC3DeCQDyiqJOsJRDo58RuwWmQHCF0SfiFQJ4qwrc6TFSJqSdi2aRY0S/vRMbXkD+6Hg2KWQyz6Z6EpY7RARletqJwNnzuuhXr2HSCj5QALe+0U/aUEX+dnydYBX6Nqa+0Rz/qV5aUk4YP1C2/dBCAdbYXPotBT6QBfekE428mJV8Mr7G/M7kwZ8v9WjytyJ8/FYNuekYDWonk6QTwDgQhMTiQI3Yxnu3ID63BL959lfUIv96bsifVI6/D36KTAdFi/dl7Omn5MZ9A5JXA7l+yEJKf4pcPTpQcPbjGSKyaPu0uffEjV9CTr3+VMwzq1uenxGDQ9cT/ud4pEEjwU/ihr6yttouTCvDu9ydrflHljUXxf+X00NW7HkrHnvS43AGnxQzi9g2lTOC9yDlDGbQjmnVjec7w== zuul-executor' > /etc/ssh/keys-zuul/authorized_keys
 chown -R zuul:root /etc/ssh/keys-zuul
 chmod 600 /etc/ssh/keys-zuul/authorized_keys

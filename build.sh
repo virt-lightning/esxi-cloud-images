@@ -44,9 +44,11 @@ halt
 
 %firstboot --interpreter=busybox
 
-/sbin/firmwareConfig.sh --reset-only
-rm /var/lib/dhcp/dhclient-vmk0.leases
-esxcfg-advcfg -s 1 /Net/FollowHardwareMac
+esxcfg-vmknic -d Management Network
+#/sbin/firmwareConfig.sh --reset-only
+rm /etc/dhclient-vmk0.leases
+echo '/adv/Net/FollowHardwareMac = \"1\"' > /etc/vmware/esx.conf
+
 cat << 'EOF' > /etc/rc.local.d/local.sh
 # This is a base64 copy of
 # https://github.com/goneri/esxi-cloud-init/blob/master/esxi-cloud-init.py
@@ -66,6 +68,7 @@ python /etc/esxi-cloud-init.py
 exit 0
 EOF
 chmod +x /etc/rc.local.d/local.sh
+sh -eux /sbin/auto-backup.sh
 
 halt
 

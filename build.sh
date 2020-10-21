@@ -89,7 +89,7 @@ virt-install --connect qemu:///system \
 	--vcpus=sockets=1,cores=2,threads=2 \
 	--cpu host --disk path=/var/lib/libvirt/images/esxi-${VERSION}_tmp.qcow2,size=1,sparse=yes \
 	-c /var/lib/libvirt/images/new.iso --os-type generic \
-	--accelerate --network=network:default,model=e1000 \
+	--accelerate --network=network:default,model=e1000e \
 	--hvm --graphics vnc,listen=0.0.0.0
 sleep 10
 sudo qemu-img convert -f qcow2 -O qcow2 -c /var/lib/libvirt/images/esxi-${VERSION}_tmp.qcow2 esxi-${VERSION}.qcow2

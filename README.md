@@ -4,6 +4,19 @@
 - Libvirt and virt-install.
 - ESXi ISO image
 
+# Ubuntu
+
+Error : failed to find romfile "efi-e1000e.rom"
+
+Unfortunately the e1000e efi rom is not shipped with ubuntu... 
+Toinstall it:
+
+```
+apt install qemu-system-x86 qemu-efi qemu-ipxe
+cd /usr/lib/ipxe/qemu/
+sudo wget https://github.com/qemu/qemu/raw/master/pc-bios/efi-e1000e.rom 
+```
+
 # Build your image
 
 ```shell

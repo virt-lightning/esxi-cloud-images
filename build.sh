@@ -19,6 +19,9 @@ ESXI_MOUNT_POINT=${TMPDIR}/mount
 VSHPERE_MOUNT_POINT=${TMPDIR}/vsphere
 TARGET_ISO=${TMPDIR}/new
 
+rm -f esxi-${VERSION}.yaml
+rm -f esxi-${VERSION}.qcow2
+
 mkdir -p ${ESXI_MOUNT_POINT}
 mkdir -p ${TARGET_ISO}
 

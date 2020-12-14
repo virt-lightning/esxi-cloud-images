@@ -56,7 +56,7 @@ echo '/adv/Net/FollowHardwareMac = \"1\"' > /etc/vmware/esx.conf
 cat << 'EOF' > /etc/rc.local.d/local.sh
 # This is a base64 copy of
 # https://github.com/goneri/esxi-cloud-init/blob/master/esxi-cloud-init.py
-echo '$(curl -L -s https://raw.githubusercontent.com/goneri/esxi-cloud-init/devel/esxi-cloud-init.py|base64 -)' | python -m base64 -d - > /etc/esxi-cloud-init.py
+echo '$(curl -L -s https://raw.githubusercontent.com/goneri/esxi-cloud-init/master/esxi-cloud-init.py|base64 -)' | python -m base64 -d - > /etc/esxi-cloud-init.py
 
 # Create the Zuul user for the Ansible-CI
 /usr/lib/vmware/busybox/bin/busybox adduser -s /bin/sh -G root -H -D zuul

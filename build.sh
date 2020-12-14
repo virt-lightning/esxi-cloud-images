@@ -30,6 +30,7 @@ if [[ $(df --output=fstype ${ESXI_MOUNT_POINT}| tail -n1) != "iso9660" ]]; then
 fi
 
 rsync -av ${ESXI_MOUNT_POINT}/ ${TARGET_ISO}
+sleep 1
 sudo umount ${ESXI_MOUNT_POINT}
 
 echo "

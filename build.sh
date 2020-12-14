@@ -87,17 +87,25 @@ sudo genisoimage -relaxed-filenames -J -R -o ${TMPDIR}/new.iso -b isolinux.bin -
 sudo mv ${TARGET_ISO}.iso /var/lib/libvirt/images/
 sudo chmod 644 /var/lib/libvirt/images/new.iso
 
+nic_driver=vmxnet3
+disk_size=4
 echo "Deployment ongoing, you will just have to press [ENTER] at the end."
 virt-install --connect qemu:///system \
 	-n esxi-${VERSION}_tmp -r 4096 \
 	--vcpus=sockets=1,cores=2,threads=2 \
-	--cpu host --disk path=/var/lib/libvirt/images/esxi-${VERSION}_tmp.qcow2,size=1,sparse=yes \
+	--cpu host --disk path=/var/lib/libvirt/images/esxi-${VERSION}_tmp.qcow2,size=${disk_size},sparse=yes,target.bus=sata \
 	-c /var/lib/libvirt/images/new.iso --os-type generic \
-	--accelerate --network=network:default,model=e1000 \
+	--accelerate --network=network:default,model=${nic_driver} \
 	--hvm --graphics vnc,listen=0.0.0.0
 sleep 10
 sudo qemu-img convert -f qcow2 -O qcow2 -c /var/lib/libvirt/images/esxi-${VERSION}_tmp.qcow2 esxi-${VERSION}.qcow2
-sudo cp default_config.yaml esxi-${VERSION}.yaml
+cp default_config.yaml esxi-${VERSION}.yaml
+if echo $VERSION|egrep '^7'; then
+    echo "default_nic_model: e1000e" >> esxi-${VERSION}.yaml
+else
+    echo "default_nic_model: e1000" >> esxi-${VERSION}.yaml
+fi
+
 sudo virsh undefine --remove-all-storage esxi-${VERSION}_tmp
 sudo rm /var/lib/libvirt/images/new.iso
 

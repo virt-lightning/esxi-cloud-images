@@ -68,7 +68,7 @@ chmod 600 /etc/ssh/keys-zuul/authorized_keys
 esxcli system permission set -i zuul -r Admin
 
 vim-cmd hostsvc/start_ssh
-python /etc/esxi-cloud-init.py
+python /etc/esxi-cloud-init.py > /etc/esxi-cloud-init.log 2>&1
 exit 0
 EOF
 chmod +x /etc/rc.local.d/local.sh

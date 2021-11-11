@@ -82,7 +82,7 @@ sudo sed -i s,timeout=5,timeout=1, ${TARGET_ISO}/boot.cfg
 sudo sed -i 's,\(kernelopt=.*\),\1 ks=cdrom:/KS_CUST.CFG,' ${TARGET_ISO}/boot.cfg
 sudo sed -i 's,TIMEOUT 80,TIMEOUT 1,' ${TARGET_ISO}/isolinux.cfg
 
-sudo genisoimage -relaxed-filenames -J -R -o ${TMPDIR}/new.iso -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -eltorito-alt-boot -e efiboot.img -no-emul-boot ${TARGET_ISO}
+sudo genisoimage -relaxed-filenames -J -R -o ${TMPDIR}/new.iso -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -eltorito-alt-boot -eltorito-boot efiboot.img -no-emul-boot ${TARGET_ISO}
 
 sudo mv ${TARGET_ISO}.iso /var/lib/libvirt/images/
 sudo chmod 644 /var/lib/libvirt/images/new.iso

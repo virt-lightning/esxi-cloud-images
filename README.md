@@ -1,7 +1,8 @@
 # Requirements
 
 - A Linux system
-- Libvirt and virt-install.
+- Libvirt, virt-install and virt-viewer (and qemu/firewalld depending on your system)
+- CDRtools (genisoimage)
 - ESXi ISO image
 
 # Build your image
@@ -10,6 +11,7 @@
 ./build.sh isos/VMware-VMvisor-Installer-6.5.0.update01-5969303.x86_64.iso
 ./build.sh isos/VMware-VMvisor-Installer-6.7.0-8169922.x86_64.iso
 ./build.sh isos/VMware-VMvisor-Installer-6.7.0.update03-14320388.x86_64.iso
+./build.sh isos/VMware-VMvisor-Installer-7.0U3-18644231.x86_64.iso
 ```
 
 # KVM configuration

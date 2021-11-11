@@ -100,11 +100,12 @@ virt-install --connect qemu:///system \
 sleep 10
 sudo qemu-img convert -f qcow2 -O qcow2 -c /var/lib/libvirt/images/esxi-${VERSION}_tmp.qcow2 esxi-${VERSION}.qcow2
 cp default_config.yaml esxi-${VERSION}.yaml
+
+nic_model='e1000e'
 if echo $VERSION|egrep '^7'; then
-    echo "default_nic_model: e1000e" >> esxi-${VERSION}.yaml
-else
-    echo "default_nic_model: e1000" >> esxi-${VERSION}.yaml
+    nic_model='e1000e'
 fi
+echo "default_nic_model: $nic_model" >> esxi-${VERSION}.yaml
 
 sudo virsh undefine --remove-all-storage esxi-${VERSION}_tmp
 sudo rm /var/lib/libvirt/images/new.iso
@@ -115,4 +116,4 @@ echo "You image is ready! Do use it:
 
     OpenStack:
         source ~/openrc.sh
-        openstack image create --disk-format qcow2 --container-format bare --file esxi-${VERSION}.qcow2 --property hw_disk_bus=sata --property hw_cpu_policy=dedicated --property hw_cdrom_bus=ide --property hw_vif_model=e1000 --property hw_boot_menu=true --property hw_qemu_guest_agent=no --min-disk 1 --min-ram 4096 esxi-${VERSION}"
+        openstack image create --disk-format qcow2 --container-format bare --file esxi-${VERSION}.qcow2 --property hw_disk_bus=sata --property hw_cpu_policy=dedicated --property hw_cdrom_bus=ide --property hw_vif_model=$nic_model --property hw_boot_menu=true --property hw_qemu_guest_agent=no --min-disk 1 --min-ram 4096 esxi-${VERSION}"

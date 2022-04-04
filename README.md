@@ -3,6 +3,7 @@
 - A Linux system
 - Libvirt and virt-install.
 - ESXi ISO image
+- virt-install
 
 # Build your image
 

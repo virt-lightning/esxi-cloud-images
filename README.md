@@ -27,6 +27,8 @@ Depending on the Linux distribution, the configuration file is located here:
 - Fedora: /etc/modprobe.d/kvm.conf
 - Ubuntu: /etc/modprobe.d/qemu-system-x86.conf
 
+A reboot may be required to reload the module with the right parameters.
+
 # OpenStack
 
 You need to associate a couple of extra parameters to the image:

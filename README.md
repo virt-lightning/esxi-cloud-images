@@ -37,11 +37,11 @@ You need to associate a couple of extra parameters to the image:
 - `hw_cpu_policy=dedicated`: this one is a nice to have to avoid Purple Screen of Death
 - `img_config_drive=mandatory`: the [esxi-cloud-init.py](https://github.com/goneri/esxi-cloud-init) script within the image only support config drive.
 - `hw_cdrom_bus=ide`
-- `hw_vif_model=e1000`: there is no `virtio` driver on ESXi.
+- `hw_vif_model=e1000e`: there is no `virtio` driver on ESXi.
 - `hw_qemu_guest_agent=no`: and the image does not include any QEMU agent.
 
 You can use the following command to upload you image:
 
 ```shell
-openstack image create --disk-format qcow2 --container-format bare --file esxi-${VERSION}.qcow2 --property hw_disk_bus=sata --property hw_cpu_policy=dedicated --property img_config_drive=mandatory --property hw_cdrom_bus=ide --property hw_vif_model=e1000 --property hw_boot_menu=true --property hw_qemu_guest_agent=no --min-disk 1 --min-ram 4096 esxi-${VERSION}
+openstack image create --disk-format qcow2 --container-format bare --file esxi-${VERSION}.qcow2 --property hw_disk_bus=sata --property hw_cpu_policy=dedicated --property img_config_drive=mandatory --property hw_cdrom_bus=ide --property hw_vif_model=e1000e --property hw_boot_menu=true --property hw_qemu_guest_agent=no --min-disk 1 --min-ram 4096 esxi-${VERSION}
 ```

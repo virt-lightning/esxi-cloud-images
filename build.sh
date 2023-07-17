@@ -36,10 +36,10 @@ sudo umount ${ESXI_MOUNT_POINT}
 echo "
 
 vmaccepteula
-# root/root
-# rootpw $(uuidgen)
 # You can generate using mkpasswd --method=SHA-512 --stdin
-rootpw --iscrypted \$6\$92/5uTgSZSu4BTVR\$TSOk5JV9RWE81ZbW7tzO/bSw9jtHX/ImhAE/AEmJNJJAl27GVhFF8GeoD5Zc.9c4wJjDrawtyk0mJ7kbBP7tV1
+# root/root
+# rootpw --iscrypted \$6\$92/5uTgSZSu4BTVR\$TSOk5JV9RWE81ZbW7tzO/bSw9jtHX/ImhAE/AEmJNJJAl27GVhFF8GeoD5Zc.9c4wJjDrawtyk0mJ7kbBP7tV1
+rootpw $(uuidgen)
 install --firstdisk --overwritevmfs
 network --bootproto=dhcp
 
